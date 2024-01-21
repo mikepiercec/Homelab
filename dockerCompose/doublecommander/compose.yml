@@ -1,0 +1,18 @@
+---
+version: "3.1"
+services:
+  doublecommander:
+    image: lscr.io/linuxserver/doublecommander:latest
+    container_name: doublecommander
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /mnt/D_Drive/doublecommander/config:/config
+      - /mnt/D_Drive/doublecommander/data:/data
+      - /mnt/S_Drive:/mnt/S_Drive
+    ports:
+      - 13000:3000
+      - 13001:3001
+    restart: unless-stopped
