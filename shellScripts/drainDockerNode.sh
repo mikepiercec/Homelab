@@ -21,24 +21,12 @@ else
 fi
 
 if [ "$STATUS" == "Active" ]; then
-	echo "This node is in the expected state. Testing the /etc/nixos/configuration.nix file."
+	echo "This node is in the expected state, draining node"
 else
 	echo "This node is not in the expected state"
 	exit
 fi
 
-if sudo nixos-rebuild dry-activate 2>&1 | grep -q "would activate the configuration..."; then
-	echo "Nix configuration is good, draining node"
-	sudo docker node update --availability drain $HOST >/dev/null
-	echo "Sleeping for one minute to allow for all services to replicate to other nodes"
-	sleep 60
-	echo "Updating node"
-	sudo nixos-rebuild switch >/dev/null 2>&1
-	echo "Setting the node as active"
-	sudo docker node update --availability active $HOST | >/dev/null
-else
-	echo "The Nix configuration test failed"
-	exit
-fi
+sudo docker node update --availability drain $HOST >/dev/null
 
-echo "Update completed"
+echo "Drain completed, please wait for services to be picked up by the other nodes"
