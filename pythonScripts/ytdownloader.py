@@ -120,7 +120,7 @@ listtest = os.path.exists(channellist)
 logtest = os.path.exists(loggingdirectory)
 if cmdtest == False or dirtest == False or listtest == False or logtest == False:
     print("Something went wrong when verifying the environment")
-    logfile.close()
+    # logfile.close()
     sys.exit(1)
 else:
     print("Environment looks good, proceeding")
@@ -143,7 +143,7 @@ for rawchannel in rawchannels:
 # First check if there are any channels to work with
 if len(channels) == 0:
     print("The channel list is empty, there are no videos from any channel to download")
-    logfile.close()
+    # logfile.close()
     sys.exit(0)
 else:
     print("The channel list is not empty, continuing")
@@ -165,7 +165,7 @@ for channel in channels:
             os.mkdir(f"{downloaddirectory}{channel.name}")
         except:
             print("Something went wrong when creating new directories, there may be an issue with permissions")
-            logfile.close()
+            # logfile.close()
             sys.exit(1)
     else:
         print(f"{channel.name} folder already exists in directory, nothing to do")
@@ -176,7 +176,7 @@ while randomvideo == None:
     if not channels:
         print("There are no more channels to download from, exiting")
         print("Script complete")
-        logfile.close()
+        # logfile.close()
         sys.exit(0)
     else:
         print("There are channels still in the list to download from")
@@ -200,7 +200,7 @@ while randomvideo == None:
 
 # Finishing up and downloading
 print(f"Downloading {randomvideo.title}")
-print(f"Command: yt-dlp -o '{downloaddirectory}{selectedchannel.name}/{randomvideo.title}.%(ext)s' '{randomvideo.url}'")
+print(f"Command == yt-dlp -o '{downloaddirectory}{selectedchannel.name}/{randomvideo.title}.%(ext)s' '{randomvideo.url}'")
 dlcommand = f"yt-dlp -o '{downloaddirectory}{selectedchannel.name}/{randomvideo.title}.%(ext)s' '{randomvideo.url}'"
 try:
     subprocess.run(dlcommand, shell=True, capture_output=True, text=True)
@@ -208,5 +208,5 @@ except:
     print("Something went wrong when attempting to download the video")
 
 # Finishing up
-logfile.close()
+# logfile.close()
 print("Script complete")
